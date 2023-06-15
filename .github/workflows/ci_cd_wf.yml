@@ -25,6 +25,20 @@ jobs:
         run: |
           python -m pip install -r requirements.txt
       
-      - name: Run tests
+      - name: Run tests with coverage
         run: |
-          python -m pytest -v tests
+          python -m pip install pytest pytest-cov
+          python -m pytest --cov=app --cov-report=xml tests/
+      
+      - name: Comment coverage on PR
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: ./pytest-coverage.txt
+          junitxml-path: ./pytest.xml
+          github-token: ${{ secrets.PYTEST_COVERAGE_COMMENT }}
+      
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: ./htmlcov  # Replace with the appropriate path to your coverage report directory
