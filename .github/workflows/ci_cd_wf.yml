@@ -36,3 +36,10 @@ jobs:
         with:
           pytest-coverage-path: ./pytest-coverage.txt
           junitxml-path: ./pytest.xml
+
+      - name: Check test results and mark workflow as failed if necessary
+        run: |
+          if grep -q 'FAILED' pytest-coverage.txt; then
+            echo 'Test case failed. Marking workflow as failed.'
+            exit 1
+          fi
