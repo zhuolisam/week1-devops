@@ -1,4 +1,5 @@
 name: test
+
 permissions: write-all 
 
 on:
@@ -35,4 +36,3 @@ jobs:
         with:
           pytest-coverage-path: ./pytest-coverage.txt
           junitxml-path: ./pytest.xml
-          github-token: ${{ secrets.PYTEST_COVERAGE_COMMENT }}
